@@ -1,9 +1,10 @@
 import asyncio
 import websockets
 import json
+import os  # ✅ สำหรับอ่าน PORT จาก Environment
 from collections import defaultdict
 
-PORT = 6789
+PORT = int(os.environ.get("PORT", 6789))  # ✅ สำหรับ Render
 
 # เก็บข้อมูลผู้เล่นเชื่อมต่อ
 connected_users = set()
@@ -38,7 +39,6 @@ async def broadcast_user_counts():
 
     await asyncio.gather(*[u.send(message) for u in connected_users])
 
-
 # ส่งสถานะเกมให้ทุกคน
 async def broadcast_game_state(reset=False):
     global board, player_turn, player_pieces, winning_pattern, game_over
@@ -60,7 +60,6 @@ async def broadcast_game_state(reset=False):
 
     await asyncio.gather(*[u.send(message) for u in connected_users])
 
-
 # ตรวจสอบว่า player ชนะหรือไม่
 def check_win(player):
     global winning_pattern
@@ -79,7 +78,6 @@ def check_win(player):
             return True
     return False
 
-
 # reset เกม
 def reset_game():
     global board, player_turn, player_pieces, winning_pattern, game_over
@@ -92,12 +90,12 @@ def reset_game():
     winning_pattern = []
     game_over = False
 
-
 # จัดการการเชื่อมต่อแต่ละ client
 async def handler(websocket):
     global game_over, player_turn
 
     connected_users.add(websocket)
+    print("🔌 Client connected")  # ✅ log debug
     await broadcast_user_counts()
     await broadcast_game_state()
 
@@ -154,7 +152,6 @@ async def handler(websocket):
                 # ตรวจสอบว่าชนะหรือยัง
                 if check_win(player):
                     game_over = True
-
                 else:
                     player_turn = 2 if player_turn == 1 else 1
 
@@ -165,15 +162,13 @@ async def handler(websocket):
         user_teams.pop(websocket, None)
         await broadcast_user_counts()
 
-
 # Helper: เปลี่ยนชื่อขนาดเป็นระดับตัวเลข
 def SIZE_LEVEL(size):
     return {"small": 1, "medium": 2, "large": 3}.get(size, 0)
 
-
 # เริ่ม WebSocket Server
 async def main():
-    print(f"Server started at ws://localhost:{PORT}")
+    print(f"✅ Server started at ws://0.0.0.0:{PORT}")  # ✅ log ใหม่
     async with websockets.serve(handler, "0.0.0.0", PORT):
         await asyncio.Future()  # run forever
 
