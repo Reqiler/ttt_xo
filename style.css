@@ -549,3 +549,11 @@ h1 {
     gap: 8px;
   }
 }
+
+@media (min-width: 768px) {
+  .board {
+    width: 450px;
+    gap: 16px;
+    padding: 20px;
+  }
+}
