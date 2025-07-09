@@ -12,7 +12,7 @@ const SIZE_LEVEL = { small: 1, medium: 2, large: 3 };
 const PIECE_TYPES = ['small', 'medium', 'large'];
 
 const ipv4 = "";
-const socket = new WebSocket("ws://project-ttt-x0.onrender.com");
+const socket = new WebSocket("wss://project-ttt-x0.onrender.com");
 
 let board, currentPlayer, currentSize, playerPieces, winningPattern = [];
 
