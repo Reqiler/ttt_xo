@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Game-XO</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <h1>Game XO New-version</h1>
+
+  <!-- ปุ่มด้านบน -->
+  <div class="top-controls">
+    <button onclick="resetGame()">🔄 เริ่มใหม่</button>
+    <button onclick="showHowToPlay()">📖 วิธีเล่น</button>
+  </div>
+
+  <div class="game-container">
+    <!-- Sidebar แสดงสถานะออนไลน์ -->
+    <div class="sidebar">
+      <div class="status-online" id="connectionStatus">
+        <div class="status-dot" id="connectionDot"></div>
+        <div class="status-label" id="connectionLabel">กำลังเชื่อมต่อ...</div>
+      </div>
+      <div class="online-counts" style="font-size: 16px;">
+        ผู้เล่นออนไลน์ <span id="totalOnline">?</span><br />
+        🅰️ ทีม A: <span id="teamAOnlineCount">?</span> คน<br />
+        🅱️ ทีม B: <span id="teamBOnlineCount">?</span> คน
+      </div>
+      <div class="team-selection">
+        <h3>เลือกทีม</h3>
+        <div class="team-buttons">
+          <button class="team-btn team-a" onclick="selectTeam('A')">🅰️ ทีม A</button>
+          <button class="team-btn team-b" onclick="selectTeam('B')">🅱️ ทีม B</button>
+        </div>
+        <div id="selectedTeam" style="margin-top: 10px; font-size: 14px; color: #94a3b8;">
+          ยังไม่ได้เลือกทีม
+        </div>
+      </div>
+    </div>
+
+    <div class="board-container">
+      <div id="status" class="status-box">🎮 ถึงตา Team A</div>
+      <div class="board" id="board"></div>
+    </div>
+
+    <div class="right-panel">
+      <div class="player-inv" id="player1inv"></div>
+      <div class="player-inv" id="player2inv"></div>
+    </div>
+  </div>
+
+  <!-- ปุ่มเลือกขนาดหมาก -->
+  <div class="controls">
+    <button class="size-btn" onclick="setSize('small')">🥚 เล็ก</button>
+    <button class="size-btn" onclick="setSize('medium')">🍳 กลาง</button>
+    <button class="size-btn" onclick="setSize('large')">🐣 ใหญ่</button>
+  </div>
+
+  <!-- Popup ชัยชนะและข้อผิดพลาด -->
+  <div id="popup">
+    <div class="content">
+      <div id="popupMessage"></div>
+      <button onclick="hidePopup()">ปิด</button>
+    </div>
+  </div>
+
+  <!-- Popup วิธีเล่น -->
+  <div id="howToPlay" class="popup">
+    <div class="content">
+      <h2>📖 วิธีเล่น</h2>
+      <p>
+        ผู้เล่นผลัดกันวางหมากลงในตาราง 3x3<br />
+        หมากมี 3 ขนาด: เล็ก 🥚 กลาง 🍳 ใหญ่ 🐣<br />
+        หมากขนาดใหญ่สามารถครอบหมากขนาดเล็กกว่าได้<br />
+        ใครเรียงแนวตรงหรือแนวทแยงได้ 3 ตัวก่อน ชนะ!
+      </p>
+      <button onclick="hideHowToPlay()">ปิด</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  
+</body>
+
+</html>
